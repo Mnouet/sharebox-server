@@ -1,5 +1,5 @@
 # Fichier de génération
-target
+target/
 
 # Fichier de configuration eclipse
 *.project
