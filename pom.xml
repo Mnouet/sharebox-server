@@ -45,20 +45,16 @@
 		</dependency>
 
 	</dependencies>
-	<profiles>
-		<profile>
-			<id>sonar</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<!-- La ligne ci-dessous n'est utile que si le port par défaut (9000) 
-					est modifié dans le fichier de configuration. -->
-				<sonar.host.url>http://sonar.abriard.ovh</sonar.host.url>
-			</properties>
-		</profile>
-	</profiles>
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.sonarsource.scanner.maven</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>3.0.1</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
