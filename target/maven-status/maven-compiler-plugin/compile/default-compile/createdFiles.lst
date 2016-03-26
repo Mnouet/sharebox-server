@@ -1,0 +1,3 @@
+com/japrod/sharebox/server/jetty/web/SampleController.class
+com/japrod/sharebox/server/jetty/service/HelloWorldService.class
+com/japrod/sharebox/server/jetty/SampleJettyApplication.class
