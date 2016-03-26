@@ -39,6 +39,18 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<profiles>
+		<profile>
+	        <id>sonar</id>
+	        <activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>
+	        <properties>
+	             <!-- La ligne ci-dessous n'est utile que si le port par défaut (9000) est modifié dans le fichier de configuration. -->
+	             <sonar.host.url>http://sonar.abriard.ovh</sonar.host.url>
+	        </properties>
+	    </profile>
+	</profiles>
 	<build>
 		<plugins>
 			<plugin>
