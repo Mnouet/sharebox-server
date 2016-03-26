@@ -38,18 +38,25 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.sonarsource.scanner.maven</groupId>
+			<artifactId>sonar-maven-plugin</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
 	</dependencies>
 	<profiles>
 		<profile>
-	        <id>sonar</id>
-	        <activation>
-	            <activeByDefault>true</activeByDefault>
-	        </activation>
-	        <properties>
-	             <!-- La ligne ci-dessous n'est utile que si le port par défaut (9000) est modifié dans le fichier de configuration. -->
-	             <sonar.host.url>http://sonar.abriard.ovh</sonar.host.url>
-	        </properties>
-	    </profile>
+			<id>sonar</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<!-- La ligne ci-dessous n'est utile que si le port par défaut (9000) 
+					est modifié dans le fichier de configuration. -->
+				<sonar.host.url>http://sonar.abriard.ovh</sonar.host.url>
+			</properties>
+		</profile>
 	</profiles>
 	<build>
 		<plugins>
@@ -58,11 +65,11 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-		        <groupId>org.sonarsource.scanner.maven</groupId>
-		        <artifactId>sonar-maven-plugin</artifactId>
-		        <version>3.0.1</version>
-		    </plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.0.1</version>
+			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
