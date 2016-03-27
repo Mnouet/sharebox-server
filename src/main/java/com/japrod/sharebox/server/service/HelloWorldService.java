@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.japrod.sharebox.server.jetty.service;
+package com.japrod.sharebox.server.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
