@@ -4,4 +4,4 @@ target/
 # Fichier de configuration eclipse
 *.project
 *.classpath
-.settings
+.settings/
