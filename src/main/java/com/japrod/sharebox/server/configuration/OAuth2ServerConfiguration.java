@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.japrod.sharebox.server;
+package com.japrod.sharebox.server.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package com.japrod.sharebox.server;
+package com.japrod.sharebox.server.configuration;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+
+import com.japrod.sharebox.server.Application;
 
 public class WebInitializer extends SpringBootServletInitializer {
 
