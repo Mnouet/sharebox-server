@@ -40,7 +40,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 
 	@NotEmpty
 	private String name;
@@ -61,20 +61,11 @@ public class User {
 	public User() {
 	}
 
-	public User(User user) {
-		super();
-		this.id = user.getId();
-		this.name = user.getName();
-		this.login = user.getLogin();
-		this.password = user.getPassword();
-		this.roles = user.getRoles();
-	}
-
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -20,8 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.japrod.sharebox.server.dao.UserRepository;
 import com.japrod.sharebox.server.model.User;
+import com.japrod.sharebox.server.repository.UserRepository;
 
 @RestController
 public class UserController {

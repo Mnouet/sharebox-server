@@ -18,7 +18,7 @@ package com.japrod.sharebox.server.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+@Deprecated
 @RestController
 public class HomeController {
 

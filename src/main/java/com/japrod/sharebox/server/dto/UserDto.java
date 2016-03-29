@@ -1,23 +1,32 @@
 package com.japrod.sharebox.server.dto;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class UserDto {
 
 	/** ID de la base de donnée. */
-	private Integer id;
+	private Long id;
 
 	/** Nom de l'utilisateur. */
+	@NotEmpty
+	@Size(min=2, max=50)
 	private String name;
 
 	/** Login de l'utilisateur. */
+	@NotEmpty
+	@Size(min=4, max=50)
 	private String login;
 
 	/** Password de l'utilisateur. */
+	@Size(min=6, max=50)
 	private String password;
 
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -25,7 +34,7 @@ public class UserDto {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

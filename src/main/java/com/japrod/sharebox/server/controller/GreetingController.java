@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.japrod.sharebox.server.model.Greeting;
 import com.japrod.sharebox.server.model.User;
 
+@Deprecated
 @RestController
 public class GreetingController {
 

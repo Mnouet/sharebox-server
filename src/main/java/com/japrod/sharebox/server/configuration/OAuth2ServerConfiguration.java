@@ -34,7 +34,7 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
-import com.japrod.sharebox.server.service.CustomUserDetailsService;
+import com.japrod.sharebox.server.service.UserService;
 
 @Configuration
 public class OAuth2ServerConfiguration {
@@ -43,23 +43,19 @@ public class OAuth2ServerConfiguration {
 
 	@Configuration
 	@EnableResourceServer
-	protected static class ResourceServerConfiguration extends
-			ResourceServerConfigurerAdapter {
+	protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
 		@Override
 		public void configure(ResourceServerSecurityConfigurer resources) {
 			// @formatter:off
-			resources
-				.resourceId(RESOURCE_ID);
+			resources.resourceId(RESOURCE_ID);
 			// @formatter:on
 		}
 
 		@Override
 		public void configure(HttpSecurity http) throws Exception {
 			// @formatter:off
-			http
-				.authorizeRequests()
-					.antMatchers("/users").hasRole("ADMIN")
+			http.authorizeRequests().antMatchers("/register").permitAll().antMatchers("/users").hasRole("ADMIN")
 					.antMatchers("/greeting").authenticated();
 			// @formatter:on
 		}
@@ -68,8 +64,7 @@ public class OAuth2ServerConfiguration {
 
 	@Configuration
 	@EnableAuthorizationServer
-	protected static class AuthorizationServerConfiguration extends
-			AuthorizationServerConfigurerAdapter {
+	protected static class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
 		private TokenStore tokenStore = new InMemoryTokenStore();
 
@@ -78,30 +73,21 @@ public class OAuth2ServerConfiguration {
 		private AuthenticationManager authenticationManager;
 
 		@Autowired
-		private CustomUserDetailsService userDetailsService;
+		private UserService userDetailsService;
 
 		@Override
-		public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-				throws Exception {
+		public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 			// @formatter:off
-			endpoints
-				.tokenStore(this.tokenStore)
-				.authenticationManager(this.authenticationManager)
-				.userDetailsService(userDetailsService);
+			endpoints.tokenStore(this.tokenStore).authenticationManager(this.authenticationManager)
+					.userDetailsService(userDetailsService);
 			// @formatter:on
 		}
 
 		@Override
 		public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 			// @formatter:off
-			clients
-				.inMemory()
-					.withClient("clientapp")
-						.authorizedGrantTypes("password", "refresh_token")
-						.authorities("USER")
-						.scopes("read", "write")
-						.resourceIds(RESOURCE_ID)
-						.secret("123456");
+			clients.inMemory().withClient("clientapp").authorizedGrantTypes("password", "refresh_token")
+					.authorities("USER").scopes("read", "write").resourceIds(RESOURCE_ID).secret("123456");
 			// @formatter:on
 		}
 
