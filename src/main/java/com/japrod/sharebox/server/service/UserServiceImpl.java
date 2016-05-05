@@ -12,29 +12,40 @@ import org.springframework.stereotype.Service;
 
 import com.japrod.sharebox.server.dto.UserDto;
 import com.japrod.sharebox.server.exception.UserNameAlreadyTakenException;
+import com.japrod.sharebox.server.model.Role;
 import com.japrod.sharebox.server.model.User;
+import com.japrod.sharebox.server.repository.RoleRepository;
 import com.japrod.sharebox.server.repository.UserRepository;
 
 @Service
-public class UserServiceImpl extends AbstractService implements UserService{
-	
+public class UserServiceImpl extends AbstractService implements UserService {
+
 	@Autowired
-	private UserRepository userDao;
-	
+	private UserRepository userRepository;
+
+	@Autowired
+	private RoleRepository roleRepository;
+
 	@Transactional
-    public User create(UserDto userDto) throws UserNameAlreadyTakenException {
-        if (userDao.findByLogin(userDto.getLogin()) != null)
-            throw new UserNameAlreadyTakenException();
-        User user = this.dozerMapper.map(userDto, User.class);
-        user = userDao.save(user);
-        if (user != null)
-            return user;
-        return null;
-    }
+	public User create(UserDto userDto) throws UserNameAlreadyTakenException {
+		if (userRepository.findByLogin(userDto.getLogin()) != null)
+			throw new UserNameAlreadyTakenException();
+		User user = this.dozerMapper.map(userDto, User.class);
+		Role userDefaultRole = roleRepository.findByName("USER");
+		if (userDefaultRole == null) {
+			// TODO logger si aucun role n'a été trouvé (fixtures non importées), et revoyer une erreur spécifique
+			return null;
+		}
+		user.getRoles().add(userDefaultRole);
+		user = userRepository.save(user);
+		if (user != null)
+			return user;
+		return null;
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userDao.findByLogin(username);
+		User user = userRepository.findByLogin(username);
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("User %s does not exist!", username));
 		}
@@ -43,6 +54,7 @@ public class UserServiceImpl extends AbstractService implements UserService{
 
 	/**
 	 * specific user view for authentication
+	 * 
 	 * @author alex
 	 *
 	 */

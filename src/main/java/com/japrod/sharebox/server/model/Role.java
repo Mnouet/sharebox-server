@@ -19,6 +19,7 @@ package com.japrod.sharebox.server.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -41,6 +42,7 @@ public class Role implements GrantedAuthority {
 	private Integer id;
 
 	@NotEmpty
+	@Column(unique = true, nullable = false)
 	private String name;
 
 	@JsonIgnore
