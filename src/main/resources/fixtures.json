@@ -1,10 +1,12 @@
 [
 	{
 	    "_class" : "com.japrod.sharebox.server.model.Role",
+	    "id" : 1,
 	    "name" : "ROLE_ADMIN"
 	},
 	{
 	    "_class" : "com.japrod.sharebox.server.model.Role",
+	    "id" : 2,
 	    "name" : "ROLE_USER"
 	}
 ]
