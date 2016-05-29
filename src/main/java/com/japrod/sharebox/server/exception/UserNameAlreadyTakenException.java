@@ -1,8 +1,8 @@
 package com.japrod.sharebox.server.exception;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class UserNameAlreadyTakenException.
+ * Error thrown when trying to create a new user with an already used name
+ * @see UserService
  */
 public class UserNameAlreadyTakenException extends Exception {
 

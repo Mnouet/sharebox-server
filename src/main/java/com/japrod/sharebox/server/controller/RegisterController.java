@@ -38,7 +38,7 @@ public class RegisterController extends AbstractController {
 	 *            the errors
 	 * @return the model and view
 	 * @throws UserNameAlreadyTakenException
-	 * @throws MissingFixtureException 
+	 * @throws MissingFixtureException
 	 */
 	@Transactional
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -22,21 +22,21 @@ public class RegisterControllerAdvice {
 	@ResponseBody
 	@ExceptionHandler(UserNameAlreadyTakenException.class)
 	@ResponseStatus(code = HttpStatus.CONFLICT, reason = "Username already taken")
-	VndErrors userNameAlreadyTakenHandler(UserNameAlreadyTakenException ex) {
+	VndErrors userNameAlreadyTakenHandler() {
 		return new VndErrors("error", "Username already taken");
 	}
 	
 	@ResponseBody
 	@ExceptionHandler(MissingFixtureException.class)
 	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Missing fixture")
-	VndErrors missingFixtureHandler(MissingFixtureException ex) {
+	VndErrors missingFixtureHandler() {
 		return new VndErrors("error", "Missing fixture");
 	}
 	
 	@ResponseBody
 	@ExceptionHandler(InvalidParameterException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "Invalid parameters given")
-	VndErrors invalidParameterHandler(InvalidParameterException ex) {
+	VndErrors invalidParameterHandler() {
 		return new VndErrors("error", "Invalid parameters given");
 	}
 }

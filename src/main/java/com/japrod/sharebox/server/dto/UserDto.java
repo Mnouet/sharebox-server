@@ -20,6 +20,7 @@ public class UserDto {
 	private String login;
 
 	/** Password de l'utilisateur. */
+	@NotEmpty
 	@Size(min=6, max=50)
 	private String password;
 

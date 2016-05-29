@@ -27,6 +27,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
 	@Autowired
 	private RoleRepository roleRepository;
 
+	@Override
 	@Transactional
 	public User create(UserDto userDto) throws UserNameAlreadyTakenException, MissingFixtureException {
 		if (userRepository.findByLogin(userDto.getLogin()) != null)
