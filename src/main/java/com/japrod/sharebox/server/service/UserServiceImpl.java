@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.japrod.sharebox.server.dto.UserDto;
+import com.japrod.sharebox.server.exception.MissingFixtureException;
 import com.japrod.sharebox.server.exception.UserNameAlreadyTakenException;
 import com.japrod.sharebox.server.model.Role;
 import com.japrod.sharebox.server.model.User;
@@ -27,14 +28,13 @@ public class UserServiceImpl extends AbstractService implements UserService {
 	private RoleRepository roleRepository;
 
 	@Transactional
-	public User create(UserDto userDto) throws UserNameAlreadyTakenException {
+	public User create(UserDto userDto) throws UserNameAlreadyTakenException, MissingFixtureException {
 		if (userRepository.findByLogin(userDto.getLogin()) != null)
 			throw new UserNameAlreadyTakenException();
 		User user = this.dozerMapper.map(userDto, User.class);
-		Role userDefaultRole = roleRepository.findByName("USER");
+		Role userDefaultRole = roleRepository.findByName("ROLE_USER");
 		if (userDefaultRole == null) {
-			// TODO logger si aucun role n'a été trouvé (fixtures non importées), et revoyer une erreur spécifique
-			return null;
+			throw new MissingFixtureException();
 		}
 		user.getRoles().add(userDefaultRole);
 		user = userRepository.save(user);

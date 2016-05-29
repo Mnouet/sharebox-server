@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.japrod.sharebox.server.exception.MissingFixtureException;
 import com.japrod.sharebox.server.exception.UserNameAlreadyTakenException;
 
 /**
@@ -23,6 +24,13 @@ public class RegisterControllerAdvice {
 	@ResponseStatus(code = HttpStatus.CONFLICT, reason = "Username already taken")
 	VndErrors userNameAlreadyTakenHandler(UserNameAlreadyTakenException ex) {
 		return new VndErrors("error", "Username already taken");
+	}
+	
+	@ResponseBody
+	@ExceptionHandler(MissingFixtureException.class)
+	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Missing fixture")
+	VndErrors missingFixtureHandler(MissingFixtureException ex) {
+		return new VndErrors("error", "Missing fixture");
 	}
 	
 	@ResponseBody

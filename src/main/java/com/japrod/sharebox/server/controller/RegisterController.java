@@ -6,10 +6,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.MediaTypes;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.ContentTypeOptionsConfig;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.japrod.sharebox.server.dto.UserDto;
+import com.japrod.sharebox.server.exception.MissingFixtureException;
 import com.japrod.sharebox.server.exception.UserNameAlreadyTakenException;
 import com.japrod.sharebox.server.model.User;
 import com.japrod.sharebox.server.service.UserService;
 
-import ch.qos.logback.core.util.ContentTypeUtil;
 import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
@@ -41,11 +38,12 @@ public class RegisterController extends AbstractController {
 	 *            the errors
 	 * @return the model and view
 	 * @throws UserNameAlreadyTakenException
+	 * @throws MissingFixtureException 
 	 */
 	@Transactional
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public User registerUserAccount(@Valid @RequestBody UserDto userDto, @ApiIgnore Errors errors)
-			throws UserNameAlreadyTakenException {
+			throws UserNameAlreadyTakenException, MissingFixtureException {
 		if (!errors.hasErrors()) {
 			return userService.create(userDto);
 		} else {
