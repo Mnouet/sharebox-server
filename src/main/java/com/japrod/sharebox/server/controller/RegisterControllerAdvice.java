@@ -15,7 +15,7 @@ import com.japrod.sharebox.server.exception.UserNameAlreadyTakenException;
 /**
  * class managing RegisterController exceptions
  * @author alex
- * @see RegisterController
+ * @see RegisterControllerTest
  */
 @ControllerAdvice
 public class RegisterControllerAdvice {

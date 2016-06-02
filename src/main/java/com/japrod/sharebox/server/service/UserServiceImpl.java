@@ -32,11 +32,11 @@ public class UserServiceImpl extends AbstractService implements UserService {
 	public User create(UserDto userDto) throws UserNameAlreadyTakenException, MissingFixtureException {
 		if (userRepository.findByLogin(userDto.getLogin()) != null)
 			throw new UserNameAlreadyTakenException();
-		User user = this.dozerMapper.map(userDto, User.class);
 		Role userDefaultRole = roleRepository.findByName("ROLE_USER");
 		if (userDefaultRole == null) {
 			throw new MissingFixtureException();
 		}
+		User user = this.dozerMapper.map(userDto, User.class);
 		user.getRoles().add(userDefaultRole);
 		user = userRepository.save(user);
 		if (user != null)
@@ -59,7 +59,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
 	 * @author alex
 	 *
 	 */
-	private final static class UserRepositoryUserDetails extends User implements UserDetails {
+	private static final class UserRepositoryUserDetails extends User implements UserDetails {
 
 		private static final long serialVersionUID = 1L;
 

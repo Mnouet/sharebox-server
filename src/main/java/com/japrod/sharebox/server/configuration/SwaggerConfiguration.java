@@ -74,7 +74,7 @@ public class SwaggerConfiguration {
 		return newArrayList(new SecurityReference("mykey", authorizationScopes));
 	}
 
-	private ApiKey apiKey() {
+	private static ApiKey apiKey() {
 		return new ApiKey("mykey", "api_key", "header");
 	}
 }
