@@ -40,8 +40,7 @@ public class UserServiceTest {
 			User u = userService.create(uDto);
 			assertTrue(u.getClass().equals(User.class));
 		} catch (UserNameAlreadyTakenException | MissingFixtureException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			assertTrue("a user with a non used login should be created", false);
 		}
 	}
 
