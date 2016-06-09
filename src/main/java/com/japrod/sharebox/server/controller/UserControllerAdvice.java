@@ -13,12 +13,12 @@ import com.japrod.sharebox.server.exception.MissingFixtureException;
 import com.japrod.sharebox.server.exception.UserNameAlreadyTakenException;
 
 /**
- * class managing RegisterController exceptions
+ * class managing UserController exceptions
  * @author alex
- * @see RegisterControllerTest
+ * @see UserController
  */
 @ControllerAdvice
-public class RegisterControllerAdvice {
+public class UserControllerAdvice {
 	@ResponseBody
 	@ExceptionHandler(UserNameAlreadyTakenException.class)
 	@ResponseStatus(code = HttpStatus.CONFLICT, reason = "Username already taken")

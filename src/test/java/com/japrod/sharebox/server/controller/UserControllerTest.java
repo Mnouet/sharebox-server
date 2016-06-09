@@ -18,10 +18,10 @@ import com.japrod.sharebox.server.model.User;
 import com.japrod.sharebox.server.service.UserService;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RegisterControllerTest {
+public class UserControllerTest {
 
 	@InjectMocks
-	private RegisterController registerController;
+	private UserController registerController;
 
 	@Mock
 	private UserService userService;
