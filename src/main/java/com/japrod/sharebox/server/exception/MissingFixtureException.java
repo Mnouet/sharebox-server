@@ -1,7 +1,11 @@
 package com.japrod.sharebox.server.exception;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class MissingFixtureException extends Exception{
 
+	private final Logger log = LoggerFactory.getLogger(MissingFixtureException.class);
 	/**
 	 * 
 	 */
@@ -10,8 +14,9 @@ public class MissingFixtureException extends Exception{
 	/**
      * Instantiates a new user name already taken exception.
      */
-    public MissingFixtureException() {
-        super();
+    public MissingFixtureException(String message) {
+        super(message);
+        log.error("Missing fixture : {}", message);
     }
 
 }

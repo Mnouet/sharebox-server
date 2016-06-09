@@ -34,7 +34,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
 			throw new UserNameAlreadyTakenException();
 		Role userDefaultRole = roleRepository.findByName("ROLE_USER");
 		if (userDefaultRole == null) {
-			throw new MissingFixtureException();
+			throw new MissingFixtureException("ROLE_USER");
 		}
 		User user = this.dozerMapper.map(userDto, User.class);
 		user.getRoles().add(userDefaultRole);
