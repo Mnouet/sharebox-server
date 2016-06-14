@@ -48,10 +48,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		// @formatter:off
-		clients.jdbc(dataSource).passwordEncoder(passwordEncoder).withClient("webapp")
+		clients.jdbc(dataSource)
+			.passwordEncoder(passwordEncoder)
+			.withClient("webapp")
 				.authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-				.authorities("ROLE_USER", "ROLE_ADMIN").scopes("read", "write", "trust")
-				.resourceIds("sharebox-resources").accessTokenValiditySeconds(60);
+				.authorities("ROLE_USER", "ROLE_ADMIN")
+				.scopes("read", "write", "trust")
+				.resourceIds("sharebox-resources")
+				.accessTokenValiditySeconds(60);
 		// @formatter:on
 	}
 

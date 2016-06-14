@@ -52,6 +52,11 @@ public class UserServiceImpl extends AbstractService implements UserService {
 		}
 		return new UserRepositoryUserDetails(user);
 	}
+	
+	@Override
+	public Iterable<User> getAll() {
+		return userRepository.findAll();
+	}
 
 	/**
 	 * specific user view for authentication
@@ -100,7 +105,5 @@ public class UserServiceImpl extends AbstractService implements UserService {
 		public boolean isEnabled() {
 			return true;
 		}
-
 	}
-
 }

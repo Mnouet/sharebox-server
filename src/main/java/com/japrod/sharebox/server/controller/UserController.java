@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,27 +22,28 @@ import com.japrod.sharebox.server.service.UserService;
 
 import springfox.documentation.annotations.ApiIgnore;
 
+/**
+ * The Class UserController.
+ */
 @RestController
+@RequestMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController extends AbstractController {
 
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 
 	/**
-	 * Register user account.
+	 * Register a new user.
 	 *
-	 * @param userDto
-	 *            the user dto
-	 * @param result
-	 *            the result
-	 * @param errors
-	 *            the errors
-	 * @return the model and view
-	 * @throws UserNameAlreadyTakenException
-	 * @throws MissingFixtureException
+	 * @param userDto the user to register
+	 * @param errors the validation errors
+	 * @return the created user
+	 * @throws UserNameAlreadyTakenException if the user name is already used
+	 * @throws MissingFixtureException if some fixtures are missing in the database, some roles in the case
 	 */
 	@Transactional
-	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public User register(@Valid @RequestBody UserDto userDto, @ApiIgnore Errors errors)
 			throws UserNameAlreadyTakenException, MissingFixtureException {
 		if (!errors.hasErrors()) {
@@ -49,5 +51,17 @@ public class UserController extends AbstractController {
 		} else {
 			throw new InvalidParameterException();
 		}
+	}
+
+	/**
+	 * List all users.
+	 * is only accessible to users with administrator role.
+	 *
+	 * @return the list of all users
+	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public Iterable<User> list() {
+		return userService.getAll();
 	}
 }
