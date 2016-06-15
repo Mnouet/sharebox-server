@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -13,7 +14,6 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
@@ -32,17 +32,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+	@Value("${sharebox.security.webapp.secret}")
+	private String webappSecret;
+
 	@Autowired
 	private UserService userDetailsService;
 
 	@Autowired
 	private DataSource dataSource;
-	
-	@Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) 
-      throws Exception {
-        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
-    }
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
@@ -58,11 +55,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		clients.jdbc(dataSource)
 			.passwordEncoder(passwordEncoder)
 			.withClient("webapp")
-				.authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
+				.authorizedGrantTypes("password", "refresh_token")
 				.authorities("ROLE_USER", "ROLE_ADMIN")
 				.scopes("read", "write", "trust")
 				.resourceIds("sharebox-resources")
-				.accessTokenValiditySeconds(60);
+				.secret(this.webappSecret);
 		// @formatter:on
 	}
 

@@ -30,12 +30,14 @@ public class UserServiceTest {
 	@Mock
 	private RoleRepository roleRepository;
 
-	@Test
+	@Test()
 	public void createUserWithNonUsedLogin() {
 		Mockito.when(userRepository.findByLogin(anyString())).thenReturn(null);
 		Mockito.when(roleRepository.findByName("ROLE_USER")).thenReturn(new Role());
 		Mockito.when(userRepository.save(any(User.class))).thenReturn(new User());
 		UserDto uDto = new UserDto();
+		//set password to avoid BCrypt nullPointerException
+		uDto.setPassword("");
 		try {
 			User u = userService.create(uDto);
 			assertTrue(u.getClass().equals(User.class));
@@ -44,18 +46,11 @@ public class UserServiceTest {
 		}
 	}
 
-	@Test
-	public void createUserWithUsedLogin() {
+	@Test(expected=UserNameAlreadyTakenException.class)
+	public void createUserWithUsedLogin() throws UserNameAlreadyTakenException, MissingFixtureException {
 		Mockito.when(userRepository.findByLogin(anyString())).thenReturn(new User());
 		UserDto uDto = new UserDto();
-		try {
-			userService.create(uDto);
-			assertFalse("creating a user with a used login should throw a UserNameAlreadyTakenException", true);
-		} catch (UserNameAlreadyTakenException | MissingFixtureException e) {
-			assertTrue("creating a user with a used login should throw a UserNameAlreadyTakenException",
-					e.getClass().equals(UserNameAlreadyTakenException.class));
-			e.printStackTrace();
-		}
+		userService.create(uDto);
 	}
 
 }

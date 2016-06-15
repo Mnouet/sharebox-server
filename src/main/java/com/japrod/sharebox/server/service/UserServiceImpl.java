@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.japrod.sharebox.server.dto.UserDto;
@@ -26,7 +27,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
-
+	
+	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	
 	@Override
 	@Transactional
 	public User create(UserDto userDto) throws UserNameAlreadyTakenException, MissingFixtureException {
@@ -37,6 +40,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
 			throw new MissingFixtureException("ROLE_USER");
 		}
 		User user = this.dozerMapper.map(userDto, User.class);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.getRoles().add(userDefaultRole);
 		user = userRepository.save(user);
 		if (user != null)

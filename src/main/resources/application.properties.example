@@ -13,3 +13,5 @@ server.port = 8080
 #auto : the user account is validated if the registration is successful
 #mail : the user is validated when clicking the confirmation link in the confirmation mail
 sharebox.register.validation.default = auto
+
+sharebox.security.webapp.secret = kR6GQc*{xs*1-3Rmrrq_X1n3X)nE>E
