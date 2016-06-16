@@ -16,15 +16,13 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import com.japrod.sharebox.server.service.UserService;
 
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
-
-	private TokenStore tokenStore = new InMemoryTokenStore();
 
 	@Autowired
 	@Qualifier("authenticationManagerBean")
@@ -41,10 +39,15 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	@Autowired
 	private DataSource dataSource;
 
+	@Bean
+	public TokenStore tokenStore() {
+		return new JdbcTokenStore(dataSource);
+	}
+	
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		// @formatter:off
-		endpoints.tokenStore(this.tokenStore).authenticationManager(this.authenticationManager)
+		endpoints.tokenStore(this.tokenStore()).authenticationManager(this.authenticationManager)
 				.userDetailsService(userDetailsService);
 		// @formatter:on
 	}
@@ -68,7 +71,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	public DefaultTokenServices tokenServices() {
 		DefaultTokenServices tokenServices = new DefaultTokenServices();
 		tokenServices.setSupportRefreshToken(true);
-		tokenServices.setTokenStore(this.tokenStore);
+		tokenServices.setTokenStore(this.tokenStore());
 		return tokenServices;
 	}
 
