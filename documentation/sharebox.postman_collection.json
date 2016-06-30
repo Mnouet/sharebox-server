@@ -46,6 +46,71 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "/oauth/token - Request token",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"username": "webapp",
+						"password": "kR6GQc*{xs*1-3Rmrrq_X1n3X)nE>E",
+						"saveHelperData": true,
+						"showPassword": false
+					}
+				},
+				"url": "{{server_ip}}:{{server_port}}/oauth/token",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic d2ViYXBwOmtSNkdRYyp7eHMqMS0zUm1ycnFfWDFuM1gpbkU+RQ==",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "testLogin",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "testPassword",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "scope",
+							"value": "read write",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "client_id",
+							"value": "webapp",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "client_secret",
+							"value": "kR6GQc*{xs*1-3Rmrrq_X1n3X)nE>E",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
