@@ -56,13 +56,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		// @formatter:off
 		clients.jdbc(dataSource)
-			.passwordEncoder(passwordEncoder)
-			.withClient("webapp")
-				.authorizedGrantTypes("password", "refresh_token")
-				.authorities("ROLE_USER", "ROLE_ADMIN")
-				.scopes("read", "write", "trust")
-				.resourceIds("sharebox-resources")
-				.secret(this.webappSecret);
+			.passwordEncoder(passwordEncoder);
 		// @formatter:on
 	}
 
