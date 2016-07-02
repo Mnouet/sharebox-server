@@ -59,9 +59,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 			.passwordEncoder(passwordEncoder)
 			.withClient("webapp")
  			.resourceIds("sharebox-resources")
- 			.authorizedGrantTypes("authorization_code", "implicit")
+ 			.authorizedGrantTypes("authorization_code", "implicit", "password")
  			.authorities("ROLE_USER", "ROLE_ADMIN")
- 			.scopes("read", "write", "trust")
+ 			.scopes("read", "write")
  			.secret(webappSecret);
 		// @formatter:on
 	}

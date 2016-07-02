@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,6 +28,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	
+
 	
 	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
@@ -71,6 +74,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
 	private static final class UserRepositoryUserDetails extends User implements UserDetails {
 
 		private static final long serialVersionUID = 1L;
+		
+		@Autowired
+		private Authentication authentication;
 
 		private UserRepositoryUserDetails(User user) {
 			this.setId(user.getId());
